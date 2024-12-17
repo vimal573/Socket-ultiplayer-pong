@@ -5,8 +5,8 @@ const io = require('socket.io')(server, {
     methods: ['GET', 'POST'],
   },
 });
-
 const PORT = 3000;
+
 server.listen(PORT);
 console.log(`Listening on port ${PORT}...`);
 
@@ -20,7 +20,7 @@ io.on('connection', socket => {
 
     readyPlayerCount++;
 
-    if (readyPlayerCount === 2) {
+    if (readyPlayerCount % 2 === 0) {
       io.emit('startGame', socket.id);
     }
   });
@@ -31,5 +31,9 @@ io.on('connection', socket => {
 
   socket.on('ballMove', ballData => {
     socket.broadcast.emit('ballMove', ballData);
+  });
+
+  socket.on('disconnect', reason => {
+    console.log(`Client ${socket.id} disconnected: ${reason}`);
   });
 });
