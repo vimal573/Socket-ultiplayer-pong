@@ -7,7 +7,6 @@ const io = require('socket.io')(server, {
 });
 
 const PORT = 3000;
-
 server.listen(PORT);
 console.log(`Listening on port ${PORT}...`);
 
@@ -28,5 +27,9 @@ io.on('connection', socket => {
 
   socket.on('paddleMove', paddleData => {
     socket.broadcast.emit('paddleMove', paddleData);
+  });
+
+  socket.on('ballMove', ballData => {
+    socket.broadcast.emit('ballMove', ballData);
   });
 });
