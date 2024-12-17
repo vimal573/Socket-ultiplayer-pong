@@ -5,7 +5,6 @@ const io = require('socket.io')(server, {
     methods: ['GET', 'POST'],
   },
 });
-
 const PORT = 3000;
 
 server.listen(PORT);
