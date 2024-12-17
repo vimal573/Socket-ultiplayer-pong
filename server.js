@@ -1,10 +1,6 @@
 const server = require('http').createServer();
-const io = require('socket.io')(server, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST'],
-  },
-});
+const io = require('socket.io')(server);
+
 const PORT = 3000;
 
 server.listen(PORT);
@@ -23,5 +19,9 @@ io.on('connection', socket => {
     if (readyPlayerCount === 2) {
       io.emit('startGame', socket.id);
     }
+  });
+
+  socket.on('paddleMove', paddleData => {
+    socket.broadcast.emit('paddleMove', paddleData);
   });
 });
